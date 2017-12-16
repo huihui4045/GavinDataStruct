@@ -23,6 +23,9 @@ public class GavinArrayList<E> {
 
     public GavinArrayList() {
 
+
+
+
         this.elementData=  new Object[DEFAULT_CAPACITY];
     }
 
