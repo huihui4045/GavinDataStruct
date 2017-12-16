@@ -12,34 +12,7 @@ public class ListTest {
         //testArrayList();
 
 
-
-
-        SingleLinkList<String> linkList=new SingleLinkList<>();
-
-       // linkList.add("A");
-       // linkList.add("B");
-      //  linkList.add("C");
-
-
-
-       //linkList.addLast("D");
-
-        linkList.add("D");
-
-       linkList.addFirst("B");
-       linkList.addFirst("A");
-
-       linkList.add("C");
-
-       linkList.add(0,"0");
-
-       linkList.add(linkList.size(),"1");
-
-       linkList.add(1,"a");
-
-       linkList.add(linkList.size()-1,"e");
-
-        linkList.disPlayAllNode();
+        testLinkList();
 
 
 
@@ -50,6 +23,33 @@ public class ListTest {
         }*/
     }
 
+    private static void testLinkList() {
+        SingleLinkList<String> linkList=new SingleLinkList<>();
+
+        // linkList.add("A");
+        // linkList.add("B");
+        //  linkList.add("C");
+
+
+        //linkList.addLast("D");
+
+        linkList.add("D");
+
+        linkList.addFirst("B");
+        linkList.addFirst("A");
+
+        linkList.add("C");
+
+        linkList.add(0,"0");
+
+        linkList.add(linkList.size(),"1");
+
+        linkList.add(1,"a");
+
+        linkList.add(linkList.size()-1,"e");
+
+        linkList.disPlayAllNode();
+    }
 
 
     private static void testArrayList() {
