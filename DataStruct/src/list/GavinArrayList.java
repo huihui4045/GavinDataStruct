@@ -23,7 +23,7 @@ public class GavinArrayList<E> {
 
     public GavinArrayList() {
 
-        this.elementData= DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
+        this.elementData=  new Object[DEFAULT_CAPACITY];
     }
 
     public GavinArrayList(int size) {
@@ -39,10 +39,6 @@ public class GavinArrayList<E> {
 
     public void  add(E e){
 
-        if (elementData==DEFAULTCAPACITY_EMPTY_ELEMENTDATA){
-
-
-        }
 
 
         elementData[size]=e;
