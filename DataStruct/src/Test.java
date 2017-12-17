@@ -20,7 +20,7 @@ public class Test {
 
         System.out.println(stringBuffer.reverse());*/
 
-        String old="薄熙来";
+        String old="。江山是烈士鲜血打下来的，江山是亿万百姓用独轮木车打下来的，江山是亿万将士用鲜血打下来的，不是某一组织，某一团体，某一家打下来的";
 
         StringBuffer stringBuffer=new StringBuffer(old);
 
