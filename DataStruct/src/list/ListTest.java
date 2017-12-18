@@ -37,16 +37,19 @@ public class ListTest {
 
         linkList.addFirst("B");
         linkList.addFirst("A");
+        linkList.addFirst("C");
 
-        linkList.add("C");
+        linkList.disPlayAllNode();
 
-        linkList.add(0,"0");
+        System.out.println("================================");
 
-        linkList.add(linkList.size(),"1");
+        linkList.set(0,"xiong");
 
-        linkList.add(1,"a");
+        //linkList.remove(0);
 
-        linkList.add(linkList.size()-1,"e");
+        //linkList.remove("D");
+
+        //linkList.remove(0);
 
         linkList.disPlayAllNode();
     }
