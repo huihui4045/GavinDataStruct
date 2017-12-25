@@ -1,6 +1,7 @@
 package list;
 
 import java.util.Iterator;
+import java.util.StringTokenizer;
 
 /**
  * Created by gavin on 2017/12/15.
@@ -12,7 +13,23 @@ public class ListTest {
         //testArrayList();
 
 
-        testLinkList();
+       // testLinkList();
+
+        MyLinkedList<String>  linkedList=new MyLinkedList<>();
+
+        linkedList.add("A");
+        linkedList.add("B");
+        linkedList.add("C");
+        linkedList.add("D");
+        linkedList.add("E");
+        linkedList.add("F");
+
+        linkedList.display();
+
+
+        linkedList.reverse();
+
+        linkedList.display();
 
 
 
