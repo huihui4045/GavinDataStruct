@@ -1,7 +1,6 @@
 package list;
 
 import java.util.Iterator;
-import java.util.StringTokenizer;
 
 /**
  * Created by gavin on 2017/12/15.
@@ -13,7 +12,7 @@ public class ListTest {
         //testArrayList();
 
 
-        testLinkList();
+        //testLinkList();
 
        /* MyLinkedList<String>  linkedList=new MyLinkedList<>();
 
@@ -38,6 +37,64 @@ public class ListTest {
 
             System.out.println(String.format("%d:%s",i,data.get(i)));
         }*/
+
+        //testILinkList();
+
+        testHeadSingleILinkedList();
+    }
+
+    private static void testHeadSingleILinkedList(){
+
+        HeadSingleILinkedList<String>  linkedList=new HeadSingleILinkedList<>();
+
+        linkedList.add("A");
+        linkedList.add("B");
+        //linkedList.add("C");
+
+        System.out.println("尾指针："+linkedList.last.data);
+        System.out.println("头指针："+linkedList.head.next.data);
+
+        linkedList.disPlay();
+
+       /* String del = linkedList.removeFirst();
+
+        System.out.println("删除后尾指针："+linkedList.last.data+"   删除掉数据："+del);
+
+        linkedList.disPlay();*/
+    }
+
+
+
+    private static void  testILinkList(){
+
+        SingleILinkedList<String>  linkedList=new SingleILinkedList<>();
+
+        linkedList.add("A");
+        linkedList.add("B");
+        linkedList.add("C");
+
+        linkedList.addLast("D");
+
+        linkedList.addFirst("a");
+
+        linkedList.add(0,"1");
+
+        linkedList.add(2,"2");
+
+        linkedList.add(4,"3");
+
+        linkedList.disPlay();
+
+        linkedList.remove("D");
+
+        //System.out.println(linkedList.contains("2"));
+
+
+        //linkedList.clear();
+
+        linkedList.disPlay();
+
+
     }
 
     private static void testLinkList() {

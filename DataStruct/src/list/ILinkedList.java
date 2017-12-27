@@ -20,11 +20,11 @@ public interface ILinkedList<T> {
 
     T remove(int index);
 
-    boolean removeAll(T data);
+    boolean remove(T data);
 
     void clear();
 
     boolean contains(T data);
 
-    String toString();
+    void disPlay();
 }
