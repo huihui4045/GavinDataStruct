@@ -13,9 +13,9 @@ public class ListTest {
         //testArrayList();
 
 
-       // testLinkList();
+        testLinkList();
 
-        MyLinkedList<String>  linkedList=new MyLinkedList<>();
+       /* MyLinkedList<String>  linkedList=new MyLinkedList<>();
 
         linkedList.add("A");
         linkedList.add("B");
@@ -29,7 +29,7 @@ public class ListTest {
 
         linkedList.reverse();
 
-        linkedList.display();
+        linkedList.display();*/
 
 
 
@@ -60,7 +60,9 @@ public class ListTest {
 
         System.out.println("================================");
 
-        linkList.set(0,"xiong");
+        String result = linkList.set(0, "xiong");
+
+        System.out.println("result:"+result);
 
         //linkList.remove(0);
 
