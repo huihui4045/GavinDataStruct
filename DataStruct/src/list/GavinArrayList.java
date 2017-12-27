@@ -71,20 +71,24 @@ public  class GavinArrayList<E>{
     }
 
 
+    /****
+     *
+     * @param index 插入的下标
+     * @param e
+     */
     public void add(int index, E e) {
 
-        rangeCheck(index);
-
+        rangeCheck(index);//检查越界
+         //检查是否需要扩容数组，如果需要则扩容。
+        // size+1,即为需要的最低容量
         ensureCapacity(size + 1);
-
-
         for (int i = index; i < size; i++) {
-
+            //元素右移，腾出新位置index
             elementData[i + 1] = elementData[i];
         }
-
+         //将新元素放到下下标为index的位置。
         elementData[index] = e;
-
+        //元素个数加1
         size++;
 
     }
@@ -111,13 +115,25 @@ public  class GavinArrayList<E>{
      */
     public E remove(int index) {
 
-
-        rangeCheck(index);
-
+        rangeCheck(index);//检查下标是否越界
+         //保留所要删除的数据
         Object remove = elementData[index];
-
         fastRemove(index);
+
         return (E) remove;
+    }
+    /****
+     * 删除元素
+     * @param index
+     */
+    private void fastRemove(int index) {
+        //从被删除的元素位置开,其后的元素都依次往前移动
+        for (int i = index; i < size; i++) {
+            elementData[i] = elementData[i + 1];
+        }
+        //设置数组元素对象为空(最后一个)
+        elementData[size-1]=null;
+        size--;
     }
 
     /***
@@ -127,53 +143,31 @@ public  class GavinArrayList<E>{
      */
     public boolean remove(E e) {
 
-
-        if (e == null) {
-
+        if (e == null) {//如何元素中有空值
 
             for (int index = 0; index < size; index++) {
 
                 if (elementData[index] == null) {
 
-
                     fastRemove(index);
-
                     return true;
-
                 }
             }
-
 
         } else {
 
+            //循环 找出数据相同的选项的下标index,然后删除
             for (int index = 0; index < size; index++) {
-
                 if (elementData[index] == e) {
-
                     fastRemove(index);
-
                     return true;
                 }
             }
-
         }
-
-
         return false;
     }
 
-    /****
-     * 删除元素
-     * @param index
-     */
-    private void fastRemove(int index) {
-        for (int i = index; i < size; i++) {
 
-            elementData[i] = elementData[i + 1];
-        }
-
-        size--;
-    }
 
 
     private String outOfBoundsMsg(int index) {
@@ -198,55 +192,43 @@ public  class GavinArrayList<E>{
 
     /****
      * 确定数组的大小
-     * @param newCapacity  数组元素的个数
+     * @param newCapacity  size+1
      */
     public void ensureCapacity(int newCapacity) {
-
-
         /***
-         * 新数组大于原来的数字大小
+         * 元素个数大于数组的长度
          */
         if (newCapacity > elementData.length) {
-
             /***
              * 需要扩容
              */
             graw(newCapacity);
         }
-
-
     }
 
     /****
      * 扩容数组
-     * @param minCapacity
+     * @param minCapacity 需要扩容的数组最小大小。
+     *                    为size+1
      */
     private void graw(int minCapacity) {
 
+        int oldCapacity = elementData.length;//当前数组的长度
 
-        int oldCapacity = elementData.length;
-
-        int newCapacity = oldCapacity + (oldCapacity >> 1);
+        //新数组的长度  为原来数组的1.5倍
+        int newCapacity = minCapacity + (oldCapacity >> 1);
 
         if (newCapacity > oldCapacity) {
-
+            //把原数组赋值给临时数组
             Object[] old = elementData;
-
+            //创建一个新数组，长度为newCapacity
             elementData = new Object[newCapacity];
-
+            //通过一个循化，将原数组的元素复制到新数组里面。
             for (int i = 0; i < old.length; i++) {
-
                 elementData[i] = old[i];
             }
-
-
             System.out.println("扩容后的大小 = [" + elementData.length + "]");
-
-            old = null;
-
         }
-
-
     }
 
 
