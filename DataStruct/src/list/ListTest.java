@@ -47,12 +47,15 @@ public class ListTest {
 
         HeadSingleILinkedList<String>  linkedList=new HeadSingleILinkedList<>();
 
-        linkedList.add("A");
+        linkedList.add(0,"A");
         linkedList.add("B");
-        //linkedList.add("C");
+        linkedList.add("C");
+
+        String remove = linkedList.remove(2);
 
         System.out.println("尾指针："+linkedList.last.data);
         System.out.println("头指针："+linkedList.head.next.data);
+        System.out.println("remove："+remove);
 
         linkedList.disPlay();
 

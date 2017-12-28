@@ -40,7 +40,28 @@ public class HeadSingleILinkedList<E> implements ILinkedList<E> {
 
     @Override
     public boolean add(int index, E data) {
-        return false;
+         //检测越界情况
+        checkPositionIndex(index);
+
+        //无需区分位置操作,中间/头部/尾部插入
+        Node p=head;
+        int i=0;
+        //查找到插入位置即index的前一个结点
+        while (p.next!=null && i<index){
+            p=p.next;
+            i++;
+        }
+        ////将新插入的结点的后继指针指向pre.next
+        Node<E> node=new Node<E>(data,p.next);
+        //更改指针指向,指向当前插入的节点
+        p.next=node;
+        //如果p是尾部指针。
+        if (p==last){
+            last=node;
+        }
+
+        size++;
+        return true;
     }
 
     /****
@@ -102,10 +123,28 @@ public class HeadSingleILinkedList<E> implements ILinkedList<E> {
 
     @Override
     public E remove(int index) {
-
-
-
-        return null;
+        checkPositionIndex(index);
+        E old=null;
+        //无需区分头删除或中间删除或尾部删除的情况
+        Node<E> pre=head;
+        int i=0;
+         //查找需要删除位置的前一个结点
+        while (pre.next!=null&&i<index){
+            pre=pre.next;
+            i++;
+        }
+        Node<E> node=pre.next;
+        if (node!=null){
+            old=node.data;
+         //如果恰好是尾部结点,则更新rear的指向
+            if (node==last){
+                last=pre;
+            }
+            //更改指针指向
+            pre.next=node.next;
+        }
+        size--;
+        return old;
     }
 
     @Override
