@@ -54,15 +54,16 @@ public class ListTest {
         linkedList.add("A");
         linkedList.add("B");
 
-        linkedList.add(2,"C");
+        //linkedList.add(2,"C");
 
+        linkedList.add("C");
         linkedList.add("D");
 
         System.out.println("===get  "+linkedList.get(2));
 
         linkedList.disPlay();
 
-       // linkedList.remove(1);
+       linkedList.remove(1);
 
 
 

@@ -165,9 +165,13 @@ public class CircleHeadILinkedList<E> implements ILinkedList<E> {
 
         int j=0;
 
+        System.out.println("deleter = [" + p.data + "]");
+
         while (p!=head&&j<index){
             j++;
             p=p.next;
+
+            System.out.println("deleter = [" + p.data + "]");
         }
 
         System.out.println("deleter = [" + p.data + "]");
