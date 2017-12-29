@@ -40,7 +40,31 @@ public class ListTest {
 
         //testILinkList();
 
-        testHeadSingleILinkedList();
+        //testHeadSingleILinkedList();
+
+        testCircleHeadLinkedList();
+    }
+
+
+    private static void  testCircleHeadLinkedList(){
+
+
+        CircleHeadILinkedList<String>  linkedList=new CircleHeadILinkedList<>();
+
+        linkedList.add("A");
+        linkedList.add("B");
+
+        linkedList.add(2,"C");
+        linkedList.add("D");
+
+        System.out.println("===get  "+linkedList.get(2));
+
+        linkedList.disPlay();
+
+        linkedList.remove(1);
+
+
+
     }
 
     private static void testHeadSingleILinkedList(){
