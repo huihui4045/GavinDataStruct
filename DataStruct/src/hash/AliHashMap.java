@@ -31,6 +31,17 @@ public class AliHashMap<K, V> implements IMap<K, V> {
 
     int threshold;
 
+
+    public AliHashMap() {
+
+        this(DEFAULT_INITIAL_CAPACITY);
+    }
+
+    public AliHashMap(int initialCapacity) {
+
+        this(initialCapacity,DEFAULT_LOAD_FACTOR);
+    }
+
     /***
      * 数据的个税
      */
