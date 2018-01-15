@@ -2,7 +2,7 @@ package hash;
 
 /**
  * Created by gavin on 2018/1/11.
- *
+ * <p>
  * 手写hashMap
  */
 public class AliHashMap<K, V> implements IMap<K, V> {
@@ -14,7 +14,7 @@ public class AliHashMap<K, V> implements IMap<K, V> {
     static final int MAXIMUM_CAPACITY = 1 << 30;
 
 
-    private HashMapEntry<K,V> [] table=null;
+    private HashMapEntry<K, V>[] table = null;
 
     /****
      * 默认大小
@@ -53,6 +53,11 @@ public class AliHashMap<K, V> implements IMap<K, V> {
 
     }
 
+    public AliHashMap() {
+
+        this(4,DEFAULT_LOAD_FACTOR);
+    }
+
     private void inflateTable(int toSize) {
 
         float thresholdFloat = toSize * loadFactor;
@@ -87,34 +92,93 @@ public class AliHashMap<K, V> implements IMap<K, V> {
 
     @Override
     public V get(Object key) {
-        return null;
+
+        if (key == null) {
+
+            return getForNullKey();
+        }
+
+        HashMapEntry<K, V> entry = getEntry(key);
+
+
+        return null == entry ? null : entry.getValue();
     }
 
     @Override
     public V put(K key, V value) {
 
-        if (table==null){
+        if (table == null) {
 
             inflateTable(threshold);
         }
 
-        if (key==null){
+        if (key == null) {
 
             return putForNullKey(value);
         }
 
 
-        int hash=hash(key);
+        int hash = hash(key);
 
-        int index=indexFor(hash,table.length);
-
-
-        for (HashMapEntry<K,V> e=table[index];e!=null;e=e.next){
+        int index = indexFor(hash, table.length);
 
 
+        for (HashMapEntry<K, V> e = table[index]; e != null; e = e.next) {
+
+
+            Object k;
+
+            if ((e.hash == hash) && ((k=e.key) == key || key.equals(k))) {
+
+                V oldValue = e.value;
+
+                e.value = value;
+
+
+
+                return oldValue;
+            }
         }
 
 
+        addEntry(hash, key, value, index);
+
+
+        return null;
+    }
+
+
+    public V getForNullKey() {
+
+        if (size == 0) return null;
+
+        for (HashMapEntry<K, V> e = table[0]; e != null; e = e.next) {
+            if (e.key == null)
+                return e.getValue();
+        }
+
+
+        return null;
+    }
+
+
+    private HashMapEntry<K, V> getEntry(Object key) {
+
+        if (size == 0) return null;
+
+        int hash = hash(key);
+
+        int index = indexFor(hash, table.length);
+        for (HashMapEntry<K, V> e = table[index]; e != null; e = e.next) {
+
+            Object k = e.key;
+
+            if ((e.hash == hash) && (k == key || key.equals(k))) {
+
+
+                return e;
+            }
+        }
 
 
         return null;
@@ -123,19 +187,19 @@ public class AliHashMap<K, V> implements IMap<K, V> {
     private V putForNullKey(V value) {
 
 
-        for (HashMapEntry<K,V> e=table[0];e!=null;e=e.next){
+        for (HashMapEntry<K, V> e = table[0]; e != null; e = e.next) {
 
-            if (e.key==null){
+            if (e.key == null) {
 
-                V old=e.getValue();
+                V old = e.getValue();
 
-                e.value=value;
+                e.value = value;
 
                 return old;
             }
         }
 
-        addEntry(0,null,value,0);
+        addEntry(0, null, value, 0);
 
 
         return null;
@@ -152,13 +216,13 @@ public class AliHashMap<K, V> implements IMap<K, V> {
     void addEntry(int hash, K key, V value, int bucketIndex) {
 
 
-        if ((size>threshold)&&(null!=table[bucketIndex])){
+        if ((size > threshold) && (null != table[bucketIndex])) {
 
             resize(2 * table.length);
 
-            hash=hash(key);
+            hash = hash(key);
 
-            bucketIndex= indexFor(hash, table.length);
+            bucketIndex = indexFor(hash, table.length);
         }
 
         createEntry(hash, key, value, bucketIndex);
@@ -172,13 +236,13 @@ public class AliHashMap<K, V> implements IMap<K, V> {
      * @param value
      * @param bucketIndex  在数组 这个位置插入一个节点
      */
-     void createEntry(int hash, K key, V value, int bucketIndex) {
+    void createEntry(int hash, K key, V value, int bucketIndex) {
 
-         HashMapEntry<K,V> e=table[bucketIndex];
+        HashMapEntry<K, V> e = table[bucketIndex];
 
-         table[bucketIndex]=new HashMapEntry<K,V>(hash,key,value,e);
+        table[bucketIndex] = new HashMapEntry<>(hash, key, value, e);
 
-         size++;
+        size++;
     }
 
     static final int hash(Object key) {
@@ -188,20 +252,88 @@ public class AliHashMap<K, V> implements IMap<K, V> {
 
     static int indexFor(int h, int length) {
         // assert Integer.bitCount(length) == 1 : "length must be a non-zero power of 2";
-        return h & (length-1);
+        return h & (length - 1);
     }
 
 
     /***
      * 扩容
-     * @param size
+     * @param newCapacity
      */
-    private void resize(int size) {
+    private void resize(int newCapacity) {
+
+        System.out.println(" 扩容  newCapacity = [" + newCapacity + "]");
+
+        HashMapEntry[] oldTable=table;
+        int oldCapacity=oldTable.length;
+        if (oldCapacity>=MAXIMUM_CAPACITY){
+            threshold=Integer.MAX_VALUE;
+            return;
+        }
+
+        HashMapEntry<K,V>[] newTable=new HashMapEntry[newCapacity];
+
+        for (HashMapEntry<K,V> e:table){
+
+            while (null!=e){
+
+                HashMapEntry<K,V> next=e.next;
+
+                int index=indexFor(e.hash,newCapacity);
+
+                e.next=newTable[index];
+                newTable[index]=e;
+
+                e=next;
+            }
+        }
+
+        table=newTable;
+
+
+        threshold= (int) Math.min(newCapacity*loadFactor,MAXIMUM_CAPACITY+1);
 
     }
 
     @Override
     public V remove(Object key) {
+
+        HashMapEntry<K,V> e=removeEntryForKey(key);
+
+
+        return (e==null?null:e.getValue());
+    }
+
+    private  HashMapEntry<K,V> removeEntryForKey(Object key) {
+        if (size()==0)return null;
+        int hash=(key==null)?0:hash(key);
+        int index=indexFor(hash,table.length);
+        HashMapEntry<K,V>  prev=table[index];
+        HashMapEntry<K,V> e=prev;
+
+        while (null!=e){
+            HashMapEntry<K,V> next=e.next;
+
+            Object k=e.key;
+            if (e.hash==hash&&(k==key||key.equals(k))){
+
+                if (prev==e){
+                    table[index]=next;
+                }else {
+                    prev.next=next;
+                }
+
+                size--;
+
+                return e;
+            }
+            prev=e;
+            e=next;
+        }
+
+
+
+
         return null;
     }
 
