@@ -34,13 +34,10 @@ public class AliHashMap<K, V> implements IMap<K, V> {
 
     public AliHashMap() {
 
-        this(DEFAULT_INITIAL_CAPACITY);
+        this(DEFAULT_INITIAL_CAPACITY,DEFAULT_LOAD_FACTOR);
     }
 
-    public AliHashMap(int initialCapacity) {
 
-        this(initialCapacity,DEFAULT_LOAD_FACTOR);
-    }
 
     /***
      * 数据的个税
@@ -64,10 +61,7 @@ public class AliHashMap<K, V> implements IMap<K, V> {
 
     }
 
-    public AliHashMap() {
 
-        this(4,DEFAULT_LOAD_FACTOR);
-    }
 
     private void inflateTable(int toSize) {
 
