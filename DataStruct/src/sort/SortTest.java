@@ -82,6 +82,10 @@ public class SortTest {
     }
 
 
+    /***
+     * 选择排序
+     * @param array
+     */
     public static void selectSort(int [] array){
 
         int index=0;

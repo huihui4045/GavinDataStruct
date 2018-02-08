@@ -7,7 +7,7 @@ import java.util.Arrays;
  */
 public class Solution {
 
-    public static int nums[] ={0,0, 1, 0, 3, 3,12};
+    public static int nums[] ={0,0, 1, 0, 3, 3,3,12};
 
     public static void main(String[] args) {
 
@@ -17,15 +17,73 @@ public class Solution {
         //moveZeroes(nums);
 
 
-        int k = removeElement(0, nums);
+       // int k = removeElement(0, nums);
 
-       // int k=removeDuplicates(nums);
+        int k=removeDuplicates2_2(nums);
 
 
         System.out.println("数组长度 = [" + k + "]");
         System.out.println("nums = [" +  Arrays.toString(nums) + "]");
 
     }
+
+    /***
+     * removeDuplicates2从有序数组中删除重复元素,从有序数组中删除重复元素,
+     * 但是变更一个要求：可以允许元素最多重复2次。
+     * 方法二：遍历数组元素，当前元素与它前一个和后一个都相等时，该数不加入
+     * @param a
+     * @return
+     */
+    public static int removeDuplicates2_2(int a[]){
+
+        Arrays.sort(a);
+        if (a.length<=2) return a.length;
+        int index=0;
+        for (int i=0;i<a.length;i++){
+            if (i>0&&i < a.length - 1 &&a[i]==a[i+1]&&a[i]==a[i-1])
+                continue;
+            a[index++]=a[i];
+        }
+        int k=index;
+        for (;k<a.length;k++){
+            a[k]=0;
+        }
+        return index;
+    }
+
+    /***
+     * removeDuplicates2从有序数组中删除重复元素,从有序数组中删除重复元素,
+     * 但是变更一个要求：可以允许元素最多重复2次。
+     * @param a
+     * @return
+     * 方法一：用index标识新数组的索引，遍历数组元素，当前元素与新数组的倒数第二个元素不同时，将其加入新数组
+     */
+    public static int removeDuplicates2_1(int a[]){
+
+        if (a.length<=2) return a.length;
+
+        int index=1;
+
+
+        for (int i=2;i<a.length;i++){
+
+            if (a[i]!=a[index-1]) a[++index]=a[i];
+
+        }
+
+        int k=index+1;
+
+        for (;k<a.length;k++){
+
+            a[k]=-1;
+        }
+
+
+
+        return index+1;
+    }
+
+
 
     /***
      * 数组03 - 从有序数组中删除重复元素 - 简单 - 26
