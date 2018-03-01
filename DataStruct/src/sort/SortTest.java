@@ -8,7 +8,7 @@ public class SortTest {
     public static void main(String[] args) {
 
 
-        int [] array={1,8,2,11,4,6,3,9};
+        int [] array={7,9,1,8,2,11,4,6,3,9,0,13};
 
         //displayArray(array);
 
@@ -18,7 +18,11 @@ public class SortTest {
 
         //displayArray(array);
 
-        fun(2);
+       // fun(2);
+
+        quickSort(array,0,array.length-1);
+
+        displayArray(array);
     }
 
 
@@ -39,7 +43,7 @@ public class SortTest {
 
     }
 
-    private static void displayArray(int[] array) {
+    public static void displayArray(int[] array) {
         for (int i : array) {
 
             System.out.print(i+"  ");
@@ -111,6 +115,51 @@ public class SortTest {
                 array[index]=temp;
             }
         }
+
+    }
+
+    /****
+     * 6  1  2   7   9  3  4  5  10   8
+     * 快速排序
+     * @param array
+     * @param beginIndex
+     * @param toIndex
+     */
+    public static void quickSort(int [] array,int beginIndex,int toIndex){
+
+        if (beginIndex>toIndex)return;
+
+        int i=beginIndex;
+        int j=toIndex;
+
+        int temp=array[beginIndex];
+
+        while (i<j){
+
+
+            //先从右边往左边找
+            while (array[j]>=temp&&i<j)
+                j--;
+
+            while (array[i]<=temp&& i<j)
+                i++;
+
+            if (i<j){
+
+                int t=array[i];
+                array[i]=array[j];
+                array[j]=t;
+            }
+
+        }
+
+        array[beginIndex]=array[i];
+
+        array[i]=temp;
+
+        quickSort(array,beginIndex,i-1);
+
+        quickSort(array,i+1,toIndex);
 
     }
 }
